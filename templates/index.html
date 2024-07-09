@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Monitoramento de Cooperados</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" href="static/Image/Logo_Sicoob_Aba.png">
+    <link rel="stylesheet" href="static/Styles.css">
+    <script src="static/script.js"></script>
+</head>
+<body>
+    <div id="loadingScreen" class="loading-screen">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Container principal -->
+    <div class="container-fluid">
+        <!-- Linha centralizada com altura de 100% da viewport -->
+        <div class="row justify-content-center align-items-center" style="height: 100vh;">
+            <!-- Coluna com largura adaptativa -->
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="box">
+                    <div class="title-container">
+                        <h1 class="mb-4 text-center">Pesquisa de Cooperado</h1>
+                        <img src="static/Image/Logo_Sicoob.png" alt="Logo" height="40">
+                    </div>
+                    <!-- Formulário de consulta -->
+                    <form id="consultaForm" method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group" >
+                            {{ form.cpfcnpj.label(class="font-weight-bold") }}
+                            {{ form.cpfcnpj(class="form-control", placeholder="Sem Pontos ou caracteres especiais") }}
+                            {% for error in form.cpfcnpj.errors %}
+                                <small class="form-text text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                        <!-- Botões de ação -->
+                        <div class="d-flex justify-content-between mt-3">
+                            <div>
+                                <button type="submit" class="btn btn-light btn-sm">Consultar</button>
+                                <button id="limparResultado" type="button" class="btn btn-light btn-sm ml-2">Limpar</button>
+                            </div>
+                            <button id="toggleAllButton" class="btn btn-outline-danger btn-sm mt-3" type="button">Expandir/Recolher Todos</button>
+
+                        </div>
+                    </form>
+                    <!-- Div para exibir resultados -->
+                    <div class="result-box mt-4" id="resultado">
+                        <div class="search-wrapper">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Buscar nos resultados...">
+                            <div id="searchIcon" class="btn btn-light"><i class="fas fa-search"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
