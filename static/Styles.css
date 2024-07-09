@@ -1,0 +1,239 @@
+/* Estilo do corpo da página */
+body {
+    color: #333333; /* Cor do texto cinza escuro */
+    display: flex; /* Utiliza flexbox para o layout */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    height: 100vh; /* Altura de 100% da viewport */
+    background: #FFFFFF; /* Fundo branco */
+    margin: 0; /* Remove a margem padrão */
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    width: 100%;
+}
+
+.title-container img {
+    margin-left: 80px;
+    max-width: 20%; /* Garante que a imagem não ultrapasse a largura da tela */
+    height: auto;
+}
+
+/* Estilo da caixa principal */
+.box {
+    max-width: 800px; /* Largura máxima da caixa */
+    width: 90%; /* Largura de 90% da tela */
+    padding: 20px; /* Espaçamento interno */
+    background-color: #F0F0F0; /* Cor de fundo cinza claro */
+    border: 1px solid #CCCCCC; /* Cor da borda */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra da caixa */
+    margin-top: 20px; /* Espaçamento superior */
+}
+
+/* Estilo da caixa de resultados */
+.result-box {
+    max-height: 400px; /* Altura máxima da caixa */
+    overflow-y: auto; /* Rolagem vertical automática */
+    margin-top: 10px; /* Espaçamento superior */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #CCCCCC; /* Cor da borda */
+    border-radius: 6px; /* Bordas arredondadas */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra da caixa */
+    background-color: #FFFFFF; /* Cor de fundo branca */
+}
+
+/* Estilo do item de resultado */
+.result-item {
+    margin-bottom: 10px; /* Espaçamento inferior */
+}
+
+/* Estilo do rótulo do resultado */
+.result-label {
+    font-weight: bold; /* Texto em negrito */
+    color: #333333; /* Cor do texto cinza escuro */
+}
+
+/* Estilo do botão de alternância */
+.toggle-button {
+    cursor: pointer; /* Cursor de ponteiro */
+    background: none; /* Sem fundo */
+    border: none; /* Sem borda */
+    outline: none; /* Sem contorno */
+    padding: 0; /* Sem espaçamento interno */
+    margin-bottom: 5px; /* Espaçamento inferior */
+    width: 100%; /* Largura total */
+    text-align: left; /* Alinhamento à esquerda */
+    color: #666666; /* Cor do texto cinza mais claro */
+    font-weight: bold; /* Texto em negrito */
+    text-transform: uppercase; /* Texto em maiúsculas */
+}
+
+/* Estilo do ícone dentro do botão de alternância */
+.toggle-button i {
+    float: right; /* Flutua para a direita */
+}
+
+/* Estilo do conteúdo do grupo de resultados */
+.result-group-content {
+    display: none; /* Esconde o conteúdo inicialmente */
+}
+
+/* Estilo do botão para alternar todos os grupos */
+#toggleAllButton {
+    margin-top: 10px; /* Espaçamento superior */
+    background-color: #00A295; /* Cor de fundo verde-água */
+    color: #FFFFFF; /* Cor do texto branco */
+    border: none; /* Sem borda */
+    padding: 10px 20px; /* Espaçamento interno */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de ponteiro */
+    font-weight: bold; /* Texto em negrito */
+    text-transform: uppercase; /* Texto em maiúsculas */
+    transition: background-color 0.3s ease; /* Transição suave */
+}
+
+#toggleAllButton:hover {
+    background-color: #6DA6A6; /* Cor de fundo hover azul-acinzentado */
+}
+
+/* Estilo da lista de itens dentro do resultado */
+.result-item ul,
+.result-item ul li {
+    list-style-type: none; /* Remove os marcadores da lista */
+    margin: 0; /* Remove a margem */
+    padding: 0; /* Remove o espaçamento interno */
+}
+
+/* Espaçamento inferior dos itens da lista */
+.result-item ul li {
+    margin-bottom: 5px; /* Espaçamento inferior */
+}
+
+/* Estilo do contêiner de busca */
+.search-wrapper {
+    position: relative; /* Posição relativa para o posicionamento do input */
+    display: flex; /* Utiliza flexbox para o layout */
+    justify-content: flex-end; /* Alinha à direita */
+    width: 100%; /* Largura total */
+}
+/* Estilo do campo de input de busca */
+#searchInput {
+    width: 0; /* Largura inicial zero */
+    height: 36px; /* Altura do input */
+    padding: 0; /* Sem espaçamento interno */
+    border: 1px solid #00A295; /* Borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    outline: none; /* Sem contorno */
+    transition: width 0.3s, padding 0.3s; /* Transição suave */
+    opacity: 0; /* Invisível inicialmente */
+    position: absolute; /* Posição absoluta para animação */
+    right: 0; /* Alinha à direita */
+}
+
+/* Estilo do ícone de busca */
+#searchIcon {
+    cursor: pointer; /* Cursor de ponteiro */
+    display: flex; /* Flexbox para centralização */
+    align-items: center; /* Alinhamento vertical central */
+    justify-content: center; /* Alinhamento horizontal central */
+    width: 36px; /* Largura do ícone */
+    height: 36px; /* Altura do ícone */
+    background-color: #FFFFFF; /* Cor de fundo branca */
+    border: 1px solid #00A295; /* Borda */
+    border-radius: 50%; /* Bordas arredondadas */
+}
+
+/* Estilo do input de busca quando expandido */
+.search-wrapper.expanded #searchInput {
+    width: 200px; /* Largura expandida */
+    padding: 0 10px; /* Espaçamento interno */
+    opacity: 1; /* Visível */
+}
+
+/* Media Queries */
+
+/* Ajustes para telas com largura máxima de 768px */
+@media (max-width: 768px) {
+    .box {
+        width: 95%; /* Largura de 95% da tela */
+        padding: 15px; /* Espaçamento interno */
+    }
+
+    .result-box {
+        max-height: 300px; /* Altura máxima reduzida */
+    }
+
+    .toggle-button {
+        font-size: 0.9rem; /* Tamanho da fonte reduzido */
+    }
+
+    #searchInput {
+        width: 150px; /* Largura reduzida do input */
+    }
+
+    .title-container img {
+        margin-right: 10px; /* Reduz a margem à direita */
+        max-width: 30%; /* Ajusta a largura máxima da imagem */
+    }
+
+    .title-container {
+        justify-content: center; /* Centraliza o título e a imagem */
+    }
+
+    #toggleAllButton {
+        width: 100%; /* Largura total para se ajustar melhor em telas menores */
+    }
+}
+
+/* Ajustes para telas com largura máxima de 480px */
+@media (max-width: 480px) {
+    .box {
+        width: 100%; /* Largura total da tela */
+        padding: 10px; /* Espaçamento interno reduzido */
+    }
+
+    .result-box {
+        max-height: 250px; /* Altura máxima reduzida */
+    }
+
+    .toggle-button {
+        font-size: 0.8rem; /* Tamanho da fonte ainda mais reduzido */
+    }
+
+    #searchInput {
+        width: 120px; /* Largura ainda mais reduzida do input */
+    }
+
+    .title-container img {
+        margin-right: 5px; /* Reduz a margem à direita */
+        max-width: 20%; /* Ajusta a largura máxima da imagem */
+    }
+
+    .title-container {
+        flex-direction: column; /* Direção da coluna para dispositivos móveis */
+        align-items: center; /* Alinha os itens no centro */
+    }
+
+    #toggleAllButton {
+        width: 100%; /* Largura total para se ajustar melhor em telas menores */
+    }
+}
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+}
