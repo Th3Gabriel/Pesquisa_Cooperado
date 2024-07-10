@@ -1,17 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Mostra a tela de carregamento
+    // Mostra a tela de carregamento quando o conteúdo da página é carregado
     document.getElementById('loadingScreen').style.visibility = 'visible';
 });
 
 window.onload = function() {
-    // Esconde a tela de carregamento
+    // Esconde a tela de carregamento quando a página é completamente carregada
     document.getElementById('loadingScreen').style.visibility = 'hidden';
 };
 
 $(document).ready(function() {
-    // Dicionário de traduções
+    // Dicionário de traduções para substituir textos específicos por suas traduções
     var translations = {
-        // Translations dictionary
         "Age": "Idade",
         "FatherName": "Nome do Pai",
         "Gender": "Gênero",
@@ -122,14 +121,15 @@ $(document).ready(function() {
         "GRADUATED": "GRADUADO"
     };
 
-    // Chaves a serem ignoradas
-    var ignoredKeys = ["TaxIdStatusDate", "MatchKeys"];
+    // Chaves a serem ignoradas no resultado
+    var ignoredKeys = ["Data do Status do Número de Identificação Fiscal", "MatchKeys"];
 
-    // Função para criar um item de resultado
+    // Função para criar um item de resultado com base no rótulo e valor fornecidos
     function createResultItem(label, value) {
         var translatedLabel = translations[label] || label; // Traduz o rótulo se houver tradução disponível
 
         if (typeof value === 'object' && value !== null) {
+            // Se o valor for um objeto, cria uma lista de itens de resultado
             var result = '<div class="result-item">';
             result += '<span class="result-label">'+ '</span><ul>';
             for (var subKey in value) {
@@ -140,7 +140,8 @@ $(document).ready(function() {
             result += '</ul></div>';
             return result;
         } else {
-            var translatedValue = translations[value] || value; // Traduz o valor se houver tradução disponível
+            // Traduz o valor se houver tradução disponível
+            var translatedValue = translations[value] || value;
             return '<div class="result-item"><span class="result-label">' + translatedLabel + ':</span> ' + translatedValue + '</div>';
         }
     }
@@ -171,9 +172,9 @@ $(document).ready(function() {
         event.preventDefault();
 
         $.ajax({
-            url: '/',
-            type: 'POST',
-            data: $(this).serialize(),
+            url: '/', // URL para enviar o formulário
+            type: 'POST', // Método HTTP para envio
+            data: $(this).serialize(), // Serializa os dados do formulário
             success: function(data) {
                 var resultadoDiv = $('#resultado');
                 resultadoDiv.empty();
@@ -203,26 +204,28 @@ $(document).ready(function() {
                 var resultadoDiv = $('#resultado');
                 resultadoDiv.empty();
                 if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    // Exibe mensagens de erro específicas do formulário
                     for (const [key, messages] of Object.entries(xhr.responseJSON.errors)) {
                         messages.forEach(message => {
                             resultadoDiv.append('<p class="text-danger">' + message + '</p>');
                         });
                     }
                 } else {
+                    // Exibe mensagem de erro genérica
                     resultadoDiv.append('<p class="text-danger">Erro ao consultar CPF/CNPJ. Por favor, tente novamente.</p>');
                 }
             }
         });
     });
 
-    // Botão para limpar os resultados
+    // Botão para limpar os resultados e resetar o formulário
     $('#limparResultado').on('click', function(event) {
         event.preventDefault();
         $('#resultado').empty();
         $('#consultaForm').trigger('reset');
     });
 
-    // Ícone de busca
+    // Ícone de busca para alternar a exibição do campo de busca
     $(document).on('click', '#searchIcon', function() {
         $('.search-wrapper').toggleClass('expanded');
         if ($('.search-wrapper').hasClass('expanded')) {
@@ -230,7 +233,7 @@ $(document).ready(function() {
         }
     });
 
-    // Busca nos resultados
+    // Busca nos resultados conforme o usuário digita
     $(document).on('input', '#searchInput', function() {
         var searchTerm = $(this).val().toLowerCase();
         $('.result-group').each(function() {
@@ -245,4 +248,3 @@ $(document).ready(function() {
         });
     });
 });
-
