@@ -113,7 +113,7 @@ Este projeto está licenciado sob a [Licença MIT](LICENSE).
 
 ---
 
-Feito com ❤️ por [Seu Nome](https://github.com/Th3Gabriel)
+Feito com ❤️ por [Gabriel Martins Paz](https://github.com/Th3Gabriel)
 
 ---
 
