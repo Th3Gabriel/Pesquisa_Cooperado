@@ -1,23 +1,31 @@
-# Usar uma imagem base do Python
-FROM python:3.9-slim
+# Use a imagem base do Python
+FROM python:3.8-alpine
 
-# Definir o diretório de trabalho na imagem
+# Instale dependências do sistema necessárias
+RUN apk add --no-cache gcc musl-dev libffi-dev postgresql-dev
+
+# Copie o arquivo de requisitos para a imagem
+COPY requirements.txt /app/
+
+# Altere o diretório de trabalho
 WORKDIR /app
 
-# Copiar os arquivos de requisitos para o contêiner
-COPY requirements.txt requirements.txt
+# Instale as dependências do Python
+RUN pip install --upgrade pip
+RUN pip install --verbose -r requirements.txt
 
-# Instalar as dependências
-RUN pip install -r requirements.txt
+# Copie todo o conteúdo do diretório local para a imagem
+COPY . /app
 
-# Copiar o restante do código da aplicação para o contêiner
-COPY . .
-
-# Definir a variável de ambiente para a Flask
-ENV FLASK_APP=run.py
-
-# Expor a porta que a aplicação irá rodar
+# Exponha a porta que o Flask usará
 EXPOSE 5000
 
-# Comando para rodar a aplicação
-CMD ["flask", "run", "--host=0.0.0.0"]
+# Defina variáveis de ambiente
+ENV DATABASE_HOST=localhost
+ENV DATABASE_PORT=5432
+ENV DATABASE_NAME=database
+ENV DATABASE_USER=postgres
+ENV DATABASE_PASSWORD=admin
+
+# Comando para iniciar a aplicação Flask
+CMD ["python", "app.py"]
