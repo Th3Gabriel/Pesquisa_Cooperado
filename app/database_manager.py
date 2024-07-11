@@ -1,7 +1,7 @@
 import json
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from config import Config
+from app.config import Config
 
 class DatabaseManager:
     def __init__(self):

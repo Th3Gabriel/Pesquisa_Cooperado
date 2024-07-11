@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 from flask import render_template, jsonify, request, flash
-from forms import CPFCNPJForm
-from database_manager import DatabaseManager
+from app.forms import CPFCNPJForm
+from app.database_manager import DatabaseManager
+from app.config import Config
 import requests
 
 class CPFCNPJApp:
@@ -15,8 +16,8 @@ class CPFCNPJApp:
         HEADERS = {
             "accept": "application/json",
             "content-type": "application/json",
-            "AccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiR0FCUklFTC5QQVpAU0lDT09CLkNPTS5CUiIsImp0aSI6ImM3NTIxZTMzLTE0MTMtNDcwMy04OTk0LTJjODE3ZTQxNjA3ZSIsIm5hbWVVc2VyIjoiR2FicmllbCBNYXJ0aW5zIFBheiIsInVuaXF1ZV9uYW1lIjoiR0FCUklFTC5QQVpAU0lDT09CLkNPTS5CUiIsImRvbWFpbiI6IlNJQ09PQiBVTklDRU5UUk8gQlIiLCJwcm9kdWN0cyI6WyJCSUdCT09TVCIsIkJJR0lEIl0sIm5iZiI6MTcxODM2NDc3NCwiZXhwIjoxNzQ5OTAwNzc0LCJpYXQiOjE3MTgzNjQ3NzQsImlzcyI6IkJpZyBEYXRhIENvcnAuIn0.G8JqjvQDYS2iOWvYhDtuoZPaAC52lNN2QxUXf5ZOMk4",
-            "TokenId": "666c2a66434fddec816f5680"
+            "AccessToken": Config.API_ACCESS_TOKEN,
+            "TokenId": Config.API_TOKEN_ID
         }
 
         if len(cpfcnpj) == 11:
