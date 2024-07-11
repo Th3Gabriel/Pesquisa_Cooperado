@@ -31,14 +31,17 @@ my_flask_app/
 ```
 
 ## Tecnologias Utilizadas
+<div align-items: baseline>
+<img height="30" width="40" alt = "Python" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" />
+<img height="30" width="40" alt = "Flask"  src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original-wordmark.svg" />
+<img height="30" width="40" alt = "Bootstrap"  src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" />
+<img height="30" width="40" alt = "PostgreSql"  src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" />
+<img height="30" width="40" alt = "HTML5"  src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" />
+<img height="30" width="40" alt = "CSS3"  src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" />
+<img height="30" width="40" alt = "Javascript"  src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" />
+</div>
 
-- Python
-- Flask
-- Bootstrap
-- PostgreSQL
-- BigDataCorp API
-- HTML/CSS
-- JavaScript
+          
 
 ## Instalação
 
