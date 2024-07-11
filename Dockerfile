@@ -1,31 +1,30 @@
-# Use a imagem base do Python
-FROM python:3.8-alpine
+# Usa uma imagem base oficial do Python
+FROM python:3.9-slim
 
-# Instale dependências do sistema necessárias
-RUN apk add --no-cache gcc musl-dev libffi-dev postgresql-dev
+# Instala as dependências necessárias para construir psycopg2
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copie o arquivo de requisitos para a imagem
-COPY requirements.txt /app/
-
-# Altere o diretório de trabalho
+# Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-# Instale as dependências do Python
-RUN pip install --upgrade pip
-RUN pip install --verbose -r requirements.txt
+# Copia o arquivo de requisitos para o diretório de trabalho
+COPY requirements.txt requirements.txt
 
-# Copie todo o conteúdo do diretório local para a imagem
-COPY . /app
+# Instala as dependências do Python
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Exponha a porta que o Flask usará
+# Copia o conteúdo do diretório atual para o diretório de trabalho dentro do contêiner
+COPY . .
+
+# Define a variável de ambiente para o Flask
+ENV FLASK_APP=run.py
+ENV FLASK_RUN_HOST=0.0.0.0
+
+# Expõe a porta que a aplicação vai rodar
 EXPOSE 5000
 
-# Defina variáveis de ambiente
-ENV DATABASE_HOST=localhost
-ENV DATABASE_PORT=5432
-ENV DATABASE_NAME=database
-ENV DATABASE_USER=postgres
-ENV DATABASE_PASSWORD=admin
-
-# Comando para iniciar a aplicação Flask
-CMD ["python", "app.py"]
+# Comando para rodar a aplicação
+CMD ["flask", "run"]

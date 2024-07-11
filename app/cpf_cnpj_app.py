@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta
 from flask import render_template, jsonify, request, flash
 from app.forms import CPFCNPJForm
@@ -11,6 +12,7 @@ class CPFCNPJApp:
         self.db_manager = DatabaseManager()
 
     def consultar_api(self, cpfcnpj):
+        logging.debug(f"Consultando API para CPF/CNPJ: {cpfcnpj}")
         API_URL_PF = "https://plataforma.bigdatacorp.com.br/pessoas"
         API_URL_PJ = "https://plataforma.bigdatacorp.com.br/empresas"
         HEADERS = {
@@ -56,18 +58,18 @@ class CPFCNPJApp:
                 if "Result" in data:
                     return data["Result"]
                 else:
-                    print(f"No 'Result' found for CPF/CNPJ {cpfcnpj}")
-                    print(f"Response Data: {data}")
+                    logging.error(f"No 'Result' found for CPF/CNPJ {cpfcnpj}. Response Data: {data}")
             else:
-                print(f"Failed to retrieve data for CPF/CNPJ {cpfcnpj}: {response.status_code}, {response.text}")
+                logging.error(f"Failed to retrieve data for CPF/CNPJ {cpfcnpj}: {response.status_code}, {response.text}")
         except requests.exceptions.RequestException as e:
-            print(f"Error: {e}")
+            logging.error(f"Error: {e}")
 
         return None
 
     def index(self):
         if self.form.validate_on_submit():
             cpfcnpj = self.form.cpfcnpj.data.strip()
+            logging.debug(f"Form submitted with CPF/CNPJ: {cpfcnpj}")
             record = self.db_manager.get_data(cpfcnpj)
             if record:
                 if 'data' in record and record['last_updated'] > datetime.now() - timedelta(days=30):
