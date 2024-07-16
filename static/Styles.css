@@ -18,9 +18,24 @@ body {
 }
 
 .title-container img {
-    margin-left: 80px;
-    max-width: 20%; /* Garante que a imagem não ultrapasse a largura da tela */
+    margin-bottom: 50px;
+    width: 100px; /* Largura da imagem */
     height: auto;
+    min-width: 200px; /* Largura da imagem */
+    max-width: 85%; /* Garante que a imagem não ultrapasse a largura da tela */
+    height: auto;
+
+
+}
+
+#cabeca{
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.vertical-line {
+    border-left: 1px solid #ccc;
+    height: 100%;  /* Ajuste conforme necessário */
 }
 
 /* Estilo da caixa principal */

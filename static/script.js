@@ -152,7 +152,6 @@ $(document).ready(function() {
         $(this).find('i').toggleClass('fa-angle-down fa-angle-up');
         content.slideToggle();
     });
-
     // Botão para expandir ou recolher todos os grupos de resultados
     $('#toggleAllButton').on('click', function() {
         var allContents = $('.result-group-content');

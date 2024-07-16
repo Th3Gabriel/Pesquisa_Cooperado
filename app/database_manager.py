@@ -7,7 +7,6 @@ class DatabaseManager:
     def __init__(self):
         self.conn = psycopg2.connect(**Config.DATABASE)
         self.create_tables()
-
     def create_tables(self):
         with self.conn.cursor() as cursor:
             cursor.execute('''
