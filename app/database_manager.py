@@ -1,68 +1,78 @@
 import json
-import psycopg2
-from psycopg2.extras import RealDictCursor
+import mysql.connector
+from mysql.connector import errorcode
 from app.config import Config
 
 class DatabaseManager:
     def __init__(self):
-        self.conn = psycopg2.connect(**Config.DATABASE)
+        db_config = Config.DATABASE
+        self.conn = mysql.connector.connect(
+            user=db_config['user'],
+            password=db_config['password'],
+            host=db_config['host'],
+            database=db_config['dbname'],
+            port=db_config['port']
+        )
         self.create_tables()
+
     def create_tables(self):
-        with self.conn.cursor() as cursor:
-            cursor.execute('''
-                CREATE TABLE IF NOT EXISTS cpf_data (
-                    cpf TEXT PRIMARY KEY,
-                    name TEXT,
-                    age INTEGER,
-                    gender TEXT,
-                    PossibleUtilizedBanks TEXT,
-                    FinancialActivityLevel TEXT,
-                    IsFinancialSectorEmployee BOOLEAN,
-                    IsFinancialSectorOwner BOOLEAN,
-                    IsEntrepeneur BOOLEAN,
-                    IsCurrentlyEmployed BOOLEAN,
-                    mother_name TEXT,
-                    father_name TEXT,
-                    total_income NUMERIC,
-                    total_professions INTEGER,
-                    is_employed BOOLEAN,
-                    total_lawsuits INTEGER,
-                    state_distribution JSONB,
-                    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-            ''')
-            cursor.execute('''
-                CREATE TABLE IF NOT EXISTS cnpj_data (
-                    cnpj TEXT PRIMARY KEY,
-                    trade_name TEXT,
-                    legal_nature TEXT,
-                    tax_Id TEXT,
-                    TotalCollectionOrigins INTEGER,
-                    IsCurrentlyOnCollection BOOLEAN,
-                    addresses TEXT,
-                    founded_date DATE,
-                    total_employees_range TEXT,
-                    total_income_range TEXT,
-                    total_debts INTEGER,
-                    total_debt_value NUMERIC,
-                    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-            ''')
-            self.conn.commit()
+        cursor = self.conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS cpf_BigDataCorp (
+                cpf VARCHAR(11) PRIMARY KEY,
+                name VARCHAR(255),
+                age INT,
+                gender VARCHAR(10),
+                PossibleUtilizedBanks TEXT,
+                FinancialActivityLevel VARCHAR(50),
+                IsFinancialSectorEmployee BOOLEAN,
+                IsFinancialSectorOwner BOOLEAN,
+                IsEntrepeneur BOOLEAN,
+                IsCurrentlyEmployed BOOLEAN,
+                mother_name VARCHAR(255),
+                father_name VARCHAR(255),
+                total_income DECIMAL(10,2),
+                total_professions INT,
+                is_employed BOOLEAN,
+                total_lawsuits INT,
+                state_distribution JSON,
+                last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS cnpj_BigDataCorp (
+                cnpj VARCHAR(14) PRIMARY KEY,
+                trade_name VARCHAR(255),
+                legal_nature VARCHAR(255),
+                tax_Id VARCHAR(20),
+                TotalCollectionOrigins INT,
+                IsCurrentlyOnCollection BOOLEAN,
+                addresses TEXT,
+                founded_date DATE,
+                total_employees_range VARCHAR(50),
+                total_income_range VARCHAR(50),
+                total_debts INT,
+                total_debt_value DECIMAL(10,2),
+                last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        self.conn.commit()
+        cursor.close()
 
     def get_data(self, cpfcnpj):
         if len(cpfcnpj) == 11:
-            table = 'cpf_data'
+            table = 'cpf_BigDataCorp'
             column = 'cpf'
         else:
-            table = 'cnpj_data'
+            table = 'cnpj_BigDataCorp'
             column = 'cnpj'
 
-        with self.conn.cursor(cursor_factory=RealDictCursor) as cursor:
-            cursor.execute(f'SELECT * FROM {table} WHERE {column} = %s', (cpfcnpj,))
-            record = cursor.fetchone()
-            if record and 'state_distribution' in record and isinstance(record['state_distribution'], str):
-                record['state_distribution'] = json.loads(record['state_distribution'])
+        cursor = self.conn.cursor(dictionary=True)
+        cursor.execute(f'SELECT * FROM {table} WHERE {column} = %s', (cpfcnpj,))
+        record = cursor.fetchone()
+        if record and 'state_distribution' in record and isinstance(record['state_distribution'], str):
+            record['state_distribution'] = json.loads(record['state_distribution'])
+        cursor.close()
         return record
 
     def store_data(self, cpfcnpj, data):
@@ -72,7 +82,7 @@ class DatabaseManager:
         data_dict = data[0]
 
         if len(cpfcnpj) == 11:
-            table = 'cpf_data'
+            table = 'cpf_BigDataCorp'
             column = 'cpf'
             query = f'''
                 INSERT INTO {table} ({column}, 
@@ -94,24 +104,24 @@ class DatabaseManager:
                 state_distribution, 
                 last_updated)
                 VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, CURRENT_TIMESTAMP)
-                ON CONFLICT ({column}) DO UPDATE
-                SET name = EXCLUDED.name, 
-                age = EXCLUDED.age, 
-                gender = EXCLUDED.gender, 
-                mother_name = EXCLUDED.mother_name,
-                father_name = EXCLUDED.father_name, 
-                total_income = EXCLUDED.total_income, 
-                PossibleUtilizedBanks = EXCLUDED.PossibleUtilizedBanks,
-                FinancialActivityLevel = EXCLUDED.FinancialActivityLevel, 
-                IsFinancialSectorEmployee = EXCLUDED.IsFinancialSectorEmployee,
-                IsFinancialSectorOwner = EXCLUDED.IsFinancialSectorOwner,
-                IsEntrepeneur = EXCLUDED.IsEntrepeneur,
-                IsCurrentlyEmployed = EXCLUDED.IsCurrentlyEmployed,
-                total_professions = EXCLUDED.total_professions,
-                is_employed = EXCLUDED.is_employed, 
-                total_lawsuits = EXCLUDED.total_lawsuits, 
-                state_distribution = EXCLUDED.state_distribution,
-                last_updated = EXCLUDED.last_updated
+                ON DUPLICATE KEY UPDATE
+                name = VALUES(name), 
+                age = VALUES(age), 
+                gender = VALUES(gender), 
+                mother_name = VALUES(mother_name),
+                father_name = VALUES(father_name), 
+                total_income = VALUES(total_income), 
+                PossibleUtilizedBanks = VALUES(PossibleUtilizedBanks),
+                FinancialActivityLevel = VALUES(FinancialActivityLevel), 
+                IsFinancialSectorEmployee = VALUES(IsFinancialSectorEmployee),
+                IsFinancialSectorOwner = VALUES(IsFinancialSectorOwner),
+                IsEntrepeneur = VALUES(IsEntrepeneur),
+                IsCurrentlyEmployed = VALUES(IsCurrentlyEmployed),
+                total_professions = VALUES(total_professions),
+                is_employed = VALUES(is_employed), 
+                total_lawsuits = VALUES(total_lawsuits), 
+                state_distribution = VALUES(state_distribution),
+                last_updated = VALUES(last_updated)
             '''
 
             values = (
@@ -134,7 +144,7 @@ class DatabaseManager:
                 json.dumps(data_dict.get('LawsuitsDistributionData', {}).get('StateDistribution'))
             )
         else:
-            table = 'cnpj_data'
+            table = 'cnpj_BigDataCorp'
             column = 'cnpj'
             query = f'''
                 INSERT INTO {table} ({column}, 
@@ -151,19 +161,19 @@ class DatabaseManager:
                 total_debt_value, 
                 last_updated)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
-                ON CONFLICT ({column}) DO UPDATE
-                SET trade_name = EXCLUDED.trade_name, 
-                legal_nature = EXCLUDED.legal_nature, 
-                tax_Id = EXCLUDED.tax_Id,
-                TotalCollectionOrigins = EXCLUDED.TotalCollectionOrigins, 
-                IsCurrentlyOnCollection = EXCLUDED.IsCurrentlyOnCollection,
-                addresses = EXCLUDED.addresses, 
-                founded_date = EXCLUDED.founded_date, 
-                total_employees_range = EXCLUDED.total_employees_range,
-                total_income_range = EXCLUDED.total_income_range, 
-                total_debts = EXCLUDED.total_debts, 
-                total_debt_value = EXCLUDED.total_debt_value,
-                last_updated = EXCLUDED.last_updated
+                ON DUPLICATE KEY UPDATE
+                trade_name = VALUES(trade_name), 
+                legal_nature = VALUES(legal_nature), 
+                tax_Id = VALUES(tax_Id),
+                TotalCollectionOrigins = VALUES(TotalCollectionOrigins), 
+                IsCurrentlyOnCollection = VALUES(IsCurrentlyOnCollection),
+                addresses = VALUES(addresses), 
+                founded_date = VALUES(founded_date), 
+                total_employees_range = VALUES(total_employees_range),
+                total_income_range = VALUES(total_income_range), 
+                total_debts = VALUES(total_debts), 
+                total_debt_value = VALUES(total_debt_value),
+                last_updated = VALUES(last_updated)
             '''
 
             values = (
@@ -181,9 +191,10 @@ class DatabaseManager:
                 data_dict.get('GovernmentDebtors', {}).get('TotalDebtValue')
             )
 
-        with self.conn.cursor() as cursor:
-            cursor.execute(query, values)
-            self.conn.commit()
+        cursor = self.conn.cursor()
+        cursor.execute(query, values)
+        self.conn.commit()
+        cursor.close()
 
     def close_connection(self):
         self.conn.close()
