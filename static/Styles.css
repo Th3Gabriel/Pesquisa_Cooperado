@@ -1,242 +1,172 @@
 /* Estilo do corpo da página */
 body {
-    color: #333333; /* Cor do texto cinza escuro */
-    display: flex; /* Utiliza flexbox para o layout */
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
-    height: 100vh; /* Altura de 100% da viewport */
-    background: #FFFFFF; /* Fundo branco */
-    margin: 0; /* Remove a margem padrão */
-}
-
-.title-container {
+    color: #333333;
     display: flex;
+    justify-content: center;
     align-items: center;
+    height: 100vh;
+    background-image: url('Image/Plano_de_Fundo.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+}
+
+.box-principal {
+    width: 815px;
+    height: calc(100vh - 70px);
+    background-color: #F0F0F0;
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
     justify-content: flex-start;
-    text-align: left;
-    width: 100%;
+    padding: 20px;
+    overflow-y: auto; /* Adicionado para permitir a rolagem */
 }
 
-.title-container img {
-    margin-bottom: 50px;
-    width: 100px; /* Largura da imagem */
-    height: auto;
-    min-width: 200px; /* Largura da imagem */
-    max-width: 85%; /* Garante que a imagem não ultrapasse a largura da tela */
-    height: auto;
-
-
-}
-
-#cabeca{
-    align-items: flex-start;
+.box-secundaria {
+    width: 195px;
+    height: calc(100vh - 70px);
+    background-color: #F0F0F0;
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    align-items: center; /* Centraliza os ícones horizontalmente */
+    padding: 20px;
 }
 
-.vertical-line {
-    border-left: 1px solid #ccc;
-    height: 100%;  /* Ajuste conforme necessário */
+/* Estilo do cabeçalho */
+#cabeca {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Estilo da caixa principal */
-.box {
-    max-width: 800px; /* Largura máxima da caixa */
-    width: 90%; /* Largura de 90% da tela */
-    padding: 20px; /* Espaçamento interno */
-    background-color: #F0F0F0; /* Cor de fundo cinza claro */
-    border: 1px solid #CCCCCC; /* Cor da borda */
-    border-radius: 8px; /* Bordas arredondadas */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra da caixa */
-    margin-top: 20px; /* Espaçamento superior */
+/* Estilo das caixas de ícones */
+.icon-box {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.6s ease-in-out;
+    cursor: pointer;
 }
 
-/* Estilo da caixa de resultados */
+.icon-box img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.icon-box:hover {
+    transform: scale(1.05);
+}
+
+/* Outros estilos existentes */
+.text-custom {
+    color: white;
+}
+
 .result-box {
-    max-height: 400px; /* Altura máxima da caixa */
-    overflow-y: auto; /* Rolagem vertical automática */
-    margin-top: 10px; /* Espaçamento superior */
-    padding: 10px; /* Espaçamento interno */
-    border: 1px solid #CCCCCC; /* Cor da borda */
-    border-radius: 6px; /* Bordas arredondadas */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra da caixa */
-    background-color: #FFFFFF; /* Cor de fundo branca */
+    max-height: 500px;
+    overflow-y: auto;
 }
 
-/* Estilo do item de resultado */
 .result-item {
-    margin-bottom: 10px; /* Espaçamento inferior */
+    margin-bottom: 10px;
 }
 
-/* Estilo do rótulo do resultado */
 .result-label {
-    font-weight: bold; /* Texto em negrito */
-    color: #333333; /* Cor do texto cinza escuro */
+    font-weight: bold;
+    color: #333333;
 }
 
-/* Estilo do botão de alternância */
 .toggle-button {
-    cursor: pointer; /* Cursor de ponteiro */
-    background: none; /* Sem fundo */
-    border: none; /* Sem borda */
-    outline: none; /* Sem contorno */
-    padding: 0; /* Sem espaçamento interno */
-    margin-bottom: 5px; /* Espaçamento inferior */
-    width: 100%; /* Largura total */
-    text-align: left; /* Alinhamento à esquerda */
-    color: #666666; /* Cor do texto cinza mais claro */
-    font-weight: bold; /* Texto em negrito */
-    text-transform: uppercase; /* Texto em maiúsculas */
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin-bottom: 5px;
+    width: 100%;
+    text-align: left;
+    color: #666666;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
-/* Estilo do ícone dentro do botão de alternância */
 .toggle-button i {
-    float: right; /* Flutua para a direita */
+    float: right;
 }
 
-/* Estilo do conteúdo do grupo de resultados */
 .result-group-content {
-    display: none; /* Esconde o conteúdo inicialmente */
+    display: block; /* Alterado para garantir que o conteúdo seja exibido */
 }
 
-/* Estilo do botão para alternar todos os grupos */
 #toggleAllButton {
-    margin-top: 10px; /* Espaçamento superior */
-    background-color: #00A295; /* Cor de fundo verde-água */
-    color: #FFFFFF; /* Cor do texto branco */
-    border: none; /* Sem borda */
-    padding: 10px 20px; /* Espaçamento interno */
-    border-radius: 4px; /* Bordas arredondadas */
-    cursor: pointer; /* Cursor de ponteiro */
-    font-weight: bold; /* Texto em negrito */
-    text-transform: uppercase; /* Texto em maiúsculas */
-    transition: background-color 0.3s ease; /* Transição suave */
+    margin-top: 10px;
+    background-color: #00A295;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: small;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
 }
 
 #toggleAllButton:hover {
-    background-color: #6DA6A6; /* Cor de fundo hover azul-acinzentado */
+    background-color: #6DA6A6;
 }
 
-/* Estilo da lista de itens dentro do resultado */
-.result-item ul,
-.result-item ul li {
-    list-style-type: none; /* Remove os marcadores da lista */
-    margin: 0; /* Remove a margem */
-    padding: 0; /* Remove o espaçamento interno */
+#cabeca {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-/* Espaçamento inferior dos itens da lista */
-.result-item ul li {
-    margin-bottom: 5px; /* Espaçamento inferior */
+.separador {
+    border-left: 1px solid #ccc;
+    height: 60%;
+    width: 0;
 }
 
-/* Estilo do contêiner de busca */
+.btn-custom {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-custom:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.botao-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+}
+
 .search-wrapper {
-    position: relative; /* Posição relativa para o posicionamento do input */
-    display: flex; /* Utiliza flexbox para o layout */
-    justify-content: flex-end; /* Alinha à direita */
-    width: 100%; /* Largura total */
-}
-/* Estilo do campo de input de busca */
-#searchInput {
-    width: 0; /* Largura inicial zero */
-    height: 36px; /* Altura do input */
-    padding: 0; /* Sem espaçamento interno */
-    border: 1px solid #00A295; /* Borda */
-    border-radius: 5px; /* Bordas arredondadas */
-    outline: none; /* Sem contorno */
-    transition: width 0.3s, padding 0.3s; /* Transição suave */
-    opacity: 0; /* Invisível inicialmente */
-    position: absolute; /* Posição absoluta para animação */
-    right: 0; /* Alinha à direita */
+    display: flex;
+    width: 100%;
 }
 
-/* Estilo do ícone de busca */
-#searchIcon {
-    cursor: pointer; /* Cursor de ponteiro */
-    display: flex; /* Flexbox para centralização */
-    align-items: center; /* Alinhamento vertical central */
-    justify-content: center; /* Alinhamento horizontal central */
-    width: 36px; /* Largura do ícone */
-    height: 36px; /* Altura do ícone */
-    background-color: #FFFFFF; /* Cor de fundo branca */
-    border: 1px solid #00A295; /* Borda */
-    border-radius: 50%; /* Bordas arredondadas */
-}
-
-/* Estilo do input de busca quando expandido */
-.search-wrapper.expanded #searchInput {
-    width: 200px; /* Largura expandida */
-    padding: 0 10px; /* Espaçamento interno */
-    opacity: 1; /* Visível */
-}
-
-/* Media Queries */
-
-/* Ajustes para telas com largura máxima de 768px */
-@media (max-width: 768px) {
-    .box {
-        width: 95%; /* Largura de 95% da tela */
-        padding: 15px; /* Espaçamento interno */
-    }
-
-    .result-box {
-        max-height: 300px; /* Altura máxima reduzida */
-    }
-
-    .toggle-button {
-        font-size: 0.9rem; /* Tamanho da fonte reduzido */
-    }
-
-    #searchInput {
-        width: 150px; /* Largura reduzida do input */
-    }
-
-    .title-container img {
-        margin-right: 10px; /* Reduz a margem à direita */
-        max-width: 30%; /* Ajusta a largura máxima da imagem */
-    }
-
-    .title-container {
-        justify-content: center; /* Centraliza o título e a imagem */
-    }
-
-    #toggleAllButton {
-        width: 100%; /* Largura total para se ajustar melhor em telas menores */
-    }
-}
-
-/* Ajustes para telas com largura máxima de 480px */
-@media (max-width: 480px) {
-    .box {
-        width: 100%; /* Largura total da tela */
-        padding: 10px; /* Espaçamento interno reduzido */
-    }
-
-    .result-box {
-        max-height: 250px; /* Altura máxima reduzida */
-    }
-
-    .toggle-button {
-        font-size: 0.8rem; /* Tamanho da fonte ainda mais reduzido */
-    }
-
-    #searchInput {
-        width: 120px; /* Largura ainda mais reduzida do input */
-    }
-
-    .title-container img {
-        margin-right: 5px; /* Reduz a margem à direita */
-        max-width: 20%; /* Ajusta a largura máxima da imagem */
-    }
-
-    .title-container {
-        flex-direction: column; /* Direção da coluna para dispositivos móveis */
-        align-items: center; /* Alinha os itens no centro */
-    }
-
-    #toggleAllButton {
-        width: 100%; /* Largura total para se ajustar melhor em telas menores */
-    }
+.search-wrapper input {
+    flex: 1;
+    margin-right: 10px;
 }
 
 .loading-screen {
@@ -253,18 +183,36 @@ body {
     visibility: hidden;
 }
 
-#printButton {
+/* Estilo para garantir que o hr seja visível e tenha a margem correta */
+.hr-custom {
+    width: 100%;
+    border: 1px solid #CCCCCC;
+    margin-bottom: 10px; /* Define a distância entre o hr e o ícone abaixo */
+}
+
+/* Novo estilo para as bordas */
+.bordered-box {
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #FFFFFF;
+    position: relative;
+    text-align: left;
+}
+
+.result-group-header {
+    font-weight: bold;
+    font-size: 14px; /* Tamanho da fonte atualizado */
     position: absolute;
-    left: 20px;
-    top: 20px;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    font-size: 20px;
+    top: -14px;
+    left: 10px;
+    background-color: transparent;
+    padding: 0 10px;
+}
+
+.result-group-content div {
+    margin-bottom: 5px;
+    text-align: left;
+    font-size: 12px; /* Tamanho da fonte para os resultados */
 }

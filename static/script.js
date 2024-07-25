@@ -9,7 +9,6 @@ window.onload = function() {
 };
 
 $(document).ready(function() {
-    // Dicionário de traduções para substituir textos específicos por suas traduções
     var translations = {
         "Age": "Idade",
         "FatherName": "Nome do Pai",
@@ -130,41 +129,19 @@ $(document).ready(function() {
 
         if (typeof value === 'object' && value !== null) {
             // Se o valor for um objeto, cria uma lista de itens de resultado
-            var result = '<div class="result-item">';
-            result += '<span class="result-label">'+ '</span><ul>';
+            var result = '';
             for (var subKey in value) {
                 if (value.hasOwnProperty(subKey)) {
-                    result += '<li>' + createResultItem(subKey, value[subKey]) + '</li>';
+                    result += createResultItem(subKey, value[subKey]);
                 }
             }
-            result += '</ul></div>';
             return result;
         } else {
             // Traduz o valor se houver tradução disponível
             var translatedValue = translations[value] || value;
-            return '<div class="result-item"><span class="result-label">' + translatedLabel + ':</span> ' + translatedValue + '</div>';
+            return '<div class="result-item"><strong>' + translatedLabel + ':</strong> ' + translatedValue + '</div>';
         }
     }
-
-    // Manipulador de eventos para alternar a exibição do conteúdo do grupo de resultados
-    $(document).on('click', '.toggle-button', function() {
-        var content = $(this).next('.result-group-content');
-        $(this).find('i').toggleClass('fa-angle-down fa-angle-up');
-        content.slideToggle();
-    });
-    // Botão para expandir ou recolher todos os grupos de resultados
-    $('#toggleAllButton').on('click', function() {
-        var allContents = $('.result-group-content');
-        var allButtons = $('.toggle-button');
-        var visible = allContents.is(':visible');
-        if (visible) {
-            allContents.slideUp();
-            allButtons.find('i').removeClass('fa-angle-up').addClass('fa-angle-down');
-        } else {
-            allContents.slideDown();
-            allButtons.find('i').removeClass('fa-angle-down').addClass('fa-angle-up');
-        }
-    });
 
     // Manipulador de envio do formulário de consulta
     $('#consultaForm').on('submit', function(event) {
@@ -177,27 +154,28 @@ $(document).ready(function() {
             success: function(data) {
                 var resultadoDiv = $('#resultado');
                 resultadoDiv.empty();
-                resultadoDiv.append('<div class="search-wrapper"><input type="text" id="searchInput" class="form-control mb-3" placeholder="Buscar nos resultados..."><div id="searchIcon" class="btn btn-light"><i class="fas fa-search"></i></div></div>');
 
-                for (var key in data[0]) {
-                    if (data[0].hasOwnProperty(key) && !ignoredKeys.includes(key)) {
-                        var value = data[0][key];
-                        var resultItem = createResultItem(key, value);
+                data.forEach(function(item) {
+                    for (var key in item) {
+                        if (item.hasOwnProperty(key) && !ignoredKeys.includes(key)) {
+                            var value = item[key];
+                            var resultItem = createResultItem(key, value);
 
-                        var groupName = key;
-                        if (translations[groupName]) {
-                            groupName = translations[groupName];
+                            var groupName = key;
+                            if (translations[groupName]) {
+                                groupName = translations[groupName];
+                            }
+
+                            var resultGroup = $('<div class="result-group bordered-box">');
+                            var resultGroupHeader = $('<div class="result-group-header"><strong>' + groupName + '</strong></div>');
+                            var resultGroupContent = $('<div class="result-group-content">' + resultItem + '</div>');
+
+                            resultGroup.append(resultGroupHeader);
+                            resultGroup.append(resultGroupContent);
+                            resultadoDiv.append(resultGroup);
                         }
-
-                        var resultGroup = $('<div class="result-group">');
-                        var toggleButton = $('<button class="toggle-button" type="button">' + groupName + ' <i class="fas fa-angle-down"></i></button>');
-                        var resultGroupContent = $('<div class="result-group-content">' + resultItem + '</div>');
-
-                        resultGroup.append(toggleButton);
-                        resultGroup.append(resultGroupContent);
-                        resultadoDiv.append(resultGroup);
                     }
-                }
+                });
             },
             error: function(xhr, status, error) {
                 var resultadoDiv = $('#resultado');
@@ -206,12 +184,12 @@ $(document).ready(function() {
                     // Exibe mensagens de erro específicas do formulário
                     for (const [key, messages] of Object.entries(xhr.responseJSON.errors)) {
                         messages.forEach(message => {
-                            resultadoDiv.append('<p class="text-danger">' + message + '</p>');
+                            resultadoDiv.append('<p class="text-red-500">' + message + '</p>');
                         });
                     }
                 } else {
                     // Exibe mensagem de erro genérica
-                    resultadoDiv.append('<p class="text-danger">Erro ao consultar CPF/CNPJ. Por favor, tente novamente.</p>');
+                    resultadoDiv.append('<p class="text-red-500">Erro ao consultar CPF/CNPJ. Por favor, tente novamente.</p>');
                 }
             }
         });
@@ -236,7 +214,7 @@ $(document).ready(function() {
     $(document).on('input', '#searchInput', function() {
         var searchTerm = $(this).val().toLowerCase();
         $('.result-group').each(function() {
-            var groupName = $(this).find('.toggle-button').text().toLowerCase();
+            var groupName = $(this).find('.result-group-header').text().toLowerCase();
             var groupContent = $(this).find('.result-group-content').text().toLowerCase();
 
             if (groupName.includes(searchTerm) || groupContent.includes(searchTerm)) {
