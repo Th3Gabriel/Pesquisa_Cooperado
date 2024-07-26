@@ -1,6 +1,25 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Mostra a tela de carregamento quando o conteúdo da página é carregado
     document.getElementById('loadingScreen').style.visibility = 'visible';
+
+    // Função para criar PDF do conteúdo do resultado
+    document.getElementById('icon_pdf').addEventListener('click', function() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Pega o conteúdo do elemento com id resultado
+        const resultadoElement = document.getElementById('resultado');
+        const resultadoHtml = resultadoElement.innerHTML;
+
+        // Converte o HTML para texto simples para evitar problemas de renderização
+        const resultadoText = resultadoElement.innerText;
+
+        // Adiciona o conteúdo ao PDF
+        doc.text(resultadoText, 10, 10);
+
+        // Salva o documento como resultado.pdf
+        doc.save('resultado.pdf');
+    });
 });
 
 window.onload = function() {
@@ -117,7 +136,11 @@ $(document).ready(function() {
         "VERY HIGH": "Muito Alto",
         "M": "MASCULINO",
         "F": "FEMININO",
-        "GRADUATED": "GRADUADO"
+        "GRADUATED": "GRADUADO",
+        "EMPLOYMENT": "Empregado",
+        "Institution" : "Instituição",
+        "Level" : "Nivel",
+        "EducationalLevel" : "Nivel de Educação"
     };
 
     // Chaves a serem ignoradas no resultado
@@ -200,28 +223,5 @@ $(document).ready(function() {
         event.preventDefault();
         $('#resultado').empty();
         $('#consultaForm').trigger('reset');
-    });
-
-    // Ícone de busca para alternar a exibição do campo de busca
-    $(document).on('click', '#searchIcon', function() {
-        $('.search-wrapper').toggleClass('expanded');
-        if ($('.search-wrapper').hasClass('expanded')) {
-            $('#searchInput').focus();
-        }
-    });
-
-    // Busca nos resultados conforme o usuário digita
-    $(document).on('input', '#searchInput', function() {
-        var searchTerm = $(this).val().toLowerCase();
-        $('.result-group').each(function() {
-            var groupName = $(this).find('.result-group-header').text().toLowerCase();
-            var groupContent = $(this).find('.result-group-content').text().toLowerCase();
-
-            if (groupName.includes(searchTerm) || groupContent.includes(searchTerm)) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
     });
 });

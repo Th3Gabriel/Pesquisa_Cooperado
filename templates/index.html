@@ -22,26 +22,28 @@
     <!-- Container principal -->
     <div class="flex justify-center items-center h-screen">
         <div class="box-principal">
-            <div class="flex flex-col items-center mb-6" id="cabeca">
-                <img src="static/Image/Logo.png" alt="Logo" class="h-16 mb-4">
-                <!-- Formulário de consulta -->
-                <form id="consultaForm" method="POST" class="space-y-4 w-full">
-                    {{ form.hidden_tag() }}
-                    <div>
-                        {{ form.cpfcnpj.label(class="block text-gray-700 font-bold mb-2") }}
-                        {{ form.cpfcnpj(class="w-full p-2 border border-gray-300 rounded", placeholder="Sem Pontos ou caracteres especiais") }}
-                        {% for error in form.cpfcnpj.errors %}
-                            <small class="text-red-500">{{ error }}</small>
-                        {% endfor %}
-                    </div>
-                    <!-- Botões de ação -->
-                    <div class="flex space-x-2">
-                        <button id="BuscarResultado" type="submit" class="btn bg-custom text-custom p-2 rounded" style="background-color: #003641; width: 150px;">Buscar</button>
-                        <button id="limparResultado" type="button" class="btn bg-custom text-custom p-2 rounded" style="background-color: #003641; width: 150px;">Limpar</button>
-                    </div>
-                </form>
+            <div class="sticky-header">
+                <div class="flex flex-col items-center mb-6" id="cabeca">
+                    <img src="static/Image/Logo.png" alt="Logo" class="h-16 mb-4">
+                    <!-- Formulário de consulta -->
+                    <form id="consultaForm" method="POST" class="space-y-4 w-full">
+                        {{ form.hidden_tag() }}
+                        <div>
+                            {{ form.cpfcnpj.label(class="block text-gray-700 font-bold mb-2") }}
+                            {{ form.cpfcnpj(class="w-full p-2 border border-gray-300 rounded", placeholder="Sem Pontos ou caracteres especiais") }}
+                            {% for error in form.cpfcnpj.errors %}
+                                <small class="text-red-500">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                        <!-- Botões de ação -->
+                        <div class="flex space-x-2">
+                            <button id="BuscarResultado" type="submit" class="btn bg-custom text-custom p-2 rounded" style="background-color: #003641; width: 150px;">Buscar</button>
+                            <button id="limparResultado" type="button" class="btn bg-custom text-custom p-2 rounded" style="background-color: #003641; width: 150px;">Limpar</button>
+                        </div>
+                    </form>
+                </div>
+                <hr class="w-full border-gray-300 mb-4">
             </div>
-            <hr class="w-full border-gray-300 mb-4">
             <!-- Container para os resultados -->
             <div class="mt-6">
                 <div class="space-y-4 mt-4" id="resultado">
@@ -57,10 +59,10 @@
         </div>
         <div class="box-secundaria ml-5 flex flex-col justify-between items-center">
             <div id="ferramentas" class="space-y-4">
-                <div id="icon_bdc" class="icon-box">
+                <div id="icon_bdc_1" class="icon-box">
                     <img src="../static/Image/icon/icon_bgc.svg" alt="">
                 </div>
-                <div id="icon_bdc" class="icon-box">
+                <div id="icon_bdc_2" class="icon-box">
                     <img src="../static/Image/icon/icon_emailage.svg" alt="">
                 </div>
             </div>
@@ -74,7 +76,11 @@
                 </div>
             </div>
         </div>
-    </div>
-    <script src="../static/script.js"></script>
+        
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="../static/script.js">
+        
+    </script>
 </body>
 </html>

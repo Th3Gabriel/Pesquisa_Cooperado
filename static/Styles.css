@@ -22,9 +22,18 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     padding: 20px;
-    overflow-y: auto; /* Adicionado para permitir a rolagem */
+    overflow-y: auto;
+}
+
+.sticky-header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: #F0F0F0;
+    z-index: 100;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .box-secundaria {
@@ -36,19 +45,12 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center; /* Centraliza os ícones horizontalmente */
-    padding: 20px;
-}
-
-/* Estilo do cabeçalho */
-#cabeca {
-    display: flex;
-    flex-direction: column;
+    justify-content: space-between; /* Distribui os conteúdos ao longo da coluna */
     align-items: center;
+    padding: 20px;
+    overflow: hidden;
 }
 
-/* Estilo das caixas de ícones */
 .icon-box {
     width: 120px;
     height: 120px;
@@ -58,8 +60,15 @@ body {
     border: 1px solid #CCCCCC;
     border-radius: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.6s ease-in-out;
+    transition: transform 0.3s ease-in-out;
     cursor: pointer;
+    margin-bottom: 10px; /* Espaço entre ícones e a borda inferior */
+}
+
+.hr-custom {
+    width: 100%; /* A barra horizontal agora ocupa toda a largura do container */
+    border: 0.5px solid #CCCCCC;
+    margin: 10px 0;
 }
 
 .icon-box img {
@@ -71,7 +80,6 @@ body {
     transform: scale(1.05);
 }
 
-/* Outros estilos existentes */
 .text-custom {
     color: white;
 }
@@ -109,7 +117,7 @@ body {
 }
 
 .result-group-content {
-    display: block; /* Alterado para garantir que o conteúdo seja exibido */
+    display: block;
 }
 
 #toggleAllButton {
@@ -159,16 +167,6 @@ body {
     margin-top: 20px;
 }
 
-.search-wrapper {
-    display: flex;
-    width: 100%;
-}
-
-.search-wrapper input {
-    flex: 1;
-    margin-right: 10px;
-}
-
 .loading-screen {
     position: fixed;
     top: 0;
@@ -183,14 +181,6 @@ body {
     visibility: hidden;
 }
 
-/* Estilo para garantir que o hr seja visível e tenha a margem correta */
-.hr-custom {
-    width: 100%;
-    border: 1px solid #CCCCCC;
-    margin-bottom: 10px; /* Define a distância entre o hr e o ícone abaixo */
-}
-
-/* Novo estilo para as bordas */
 .bordered-box {
     border: 1px solid #CCCCCC;
     border-radius: 6px;
@@ -203,8 +193,8 @@ body {
 
 .result-group-header {
     font-weight: bold;
-    font-size: 14px; /* Tamanho da fonte atualizado */
-    position: absolute;
+    font-size: 14px;
+    position:absolute;
     top: -14px;
     left: 10px;
     background-color: transparent;
@@ -214,5 +204,101 @@ body {
 .result-group-content div {
     margin-bottom: 5px;
     text-align: left;
-    font-size: 12px; /* Tamanho da fonte para os resultados */
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .box-principal, .box-secundaria {
+        width: 100%;
+        height: auto;
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .sticky-header, #cabeca {
+        flex-direction: column;
+    }
+
+    .icon-box {
+        width: 80px;
+        height: 80px;
+        margin: 5px;
+    }
+
+    .result-item, .bordered-box {
+        flex-direction: column;
+    }
+
+    .loading-screen {
+        padding: 20px;
+    }
+
+    .sticky-header {
+        padding: 10px;
+    }
+
+    .box-principal {
+        margin: 5px;
+    }
+
+    .icon-box img {
+        max-width: 80%;
+    }
+
+    .btn-custom, #toggleAllButton {
+        font-size: 14px;
+    }
+
+    .result-box {
+        max-height: 300px;
+    }
+
+    .hr-custom {
+        margin-bottom: 5px;
+    }
+
+    .toggle-button i {
+        font-size: 16px;
+    }
+
+    .result-label, .result-group-header {
+        font-size: 12px;
+    }
+
+    .toggle-button, .btn-custom, #toggleAllButton {
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .box-secundaria {
+        display: none;
+    }
+
+    .icon-box:hover {
+        transform: none;
+    }
+
+    .separador {
+        display: none;
+    }
+
+    .result-group-content div {
+        font-size: 10px;
+    }
+
+    .botao-container {
+        flex-direction: column;
+        align-items: stretch;
+        margin-top: 10px;
+    }
+
+    .text-custom {
+        color: #333;
+    }
 }
