@@ -3,49 +3,19 @@ const consultaPrincipalForm = document.getElementById('consultaForm');
 const consultaEmailageForm = document.getElementById('consultaEmailForm');
 
 // Referências aos ícones
-const iconBdc = document.getElementById('icon_bdc_1');
+const iconBdc = document.getElementById('icon_bdc_1'); // Atualizado para corresponder ao ID correto
 const iconBdc2 = document.getElementById('icon_bdc_2');
 
-// Função para exibir o formulário principal (CPF/CNPJ) com animação
+// Função para exibir o formulário principal (CPF/CNPJ)
 function showPrincipalForm() {
-    consultaEmailageForm.classList.add('slide-exit');
-    consultaEmailageForm.classList.add('slide-exit-active');
-    consultaPrincipalForm.classList.add('slide-enter');
-    
-    setTimeout(() => {
-        consultaEmailageForm.style.display = 'none';
-        consultaEmailageForm.classList.remove('slide-exit');
-        consultaEmailageForm.classList.remove('slide-exit-active');
-
-        consultaPrincipalForm.style.display = 'block';
-        consultaPrincipalForm.classList.add('slide-enter-active');
-    }, 0);
-
-    setTimeout(() => {
-        consultaPrincipalForm.classList.remove('slide-enter');
-        consultaPrincipalForm.classList.remove('slide-enter-active');
-    }, 300);
+    consultaPrincipalForm.style.display = 'block';
+    consultaEmailageForm.style.display = 'none';
 }
 
-// Função para exibir o formulário Emailage com animação
+// Função para exibir o formulário Emailage
 function showEmailageForm() {
-    consultaPrincipalForm.classList.add('slide-exit');
-    consultaPrincipalForm.classList.add('slide-exit-active');
-    consultaEmailageForm.classList.add('slide-enter');
-
-    setTimeout(() => {
-        consultaPrincipalForm.style.display = 'none';
-        consultaPrincipalForm.classList.remove('slide-exit');
-        consultaPrincipalForm.classList.remove('slide-exit-active');
-
-        consultaEmailageForm.style.display = 'block';
-        consultaEmailageForm.classList.add('slide-enter-active');
-    }, 0);
-
-    setTimeout(() => {
-        consultaEmailageForm.classList.remove('slide-enter');
-        consultaEmailageForm.classList.remove('slide-enter-active');
-    }, 300);
+    consultaPrincipalForm.style.display = 'none';
+    consultaEmailageForm.style.display = 'block';
 }
 
 // Adicionando eventos de clique aos ícones
@@ -195,7 +165,7 @@ $(document).ready(function() {
         "Institution" : "Instituição",
         "Level" : "Nivel",
         "EducationalLevel" : "Nivel de Educação"
-
+        // Adicione todas as traduções relevantes aqui
     };
 
     // Chaves a serem ignoradas no resultado
@@ -221,34 +191,6 @@ $(document).ready(function() {
         }
     }
 
-    // Função para exibir os resultados no layout padrão
-    function displayResults(data) {
-        var resultadoDiv = $('#resultado');
-        resultadoDiv.empty();
-
-        data.forEach(function(item) {
-            for (var key in item) {
-                if (item.hasOwnProperty(key) && !ignoredKeys.includes(key)) {
-                    var value = item[key];
-                    var resultItem = createResultItem(key, value);
-
-                    var groupName = key;
-                    if (translations[groupName]) {
-                        groupName = translations[groupName];
-                    }
-
-                    var resultGroup = $('<div class="result-group bordered-box">');
-                    var resultGroupHeader = $('<div class="result-group-header"><strong>' + groupName + '</strong></div>');
-                    var resultGroupContent = $('<div class="result-group-content">' + resultItem + '</div>');
-
-                    resultGroup.append(resultGroupHeader);
-                    resultGroup.append(resultGroupContent);
-                    resultadoDiv.append(resultGroup);
-                }
-            }
-        });
-    }
-
     // Manipulador de envio do formulário de consulta CPF/CNPJ
     $('#consultaForm').on('submit', function(event) {
         event.preventDefault();
@@ -258,7 +200,30 @@ $(document).ready(function() {
             type: 'POST', // Método HTTP para envio
             data: $(this).serialize(), // Serializa os dados do formulário
             success: function(data) {
-                displayResults([data]); // Passa o resultado para a função de exibição
+                var resultadoDiv = $('#resultado');
+                resultadoDiv.empty();
+
+                data.forEach(function(item) {
+                    for (var key in item) {
+                        if (item.hasOwnProperty(key) && !ignoredKeys.includes(key)) {
+                            var value = item[key];
+                            var resultItem = createResultItem(key, value);
+
+                            var groupName = key;
+                            if (translations[groupName]) {
+                                groupName = translations[groupName];
+                            }
+
+                            var resultGroup = $('<div class="result-group bordered-box">');
+                            var resultGroupHeader = $('<div class="result-group-header"><strong>' + groupName + '</strong></div>');
+                            var resultGroupContent = $('<div class="result-group-content">' + resultItem + '</div>');
+
+                            resultGroup.append(resultGroupHeader);
+                            resultGroup.append(resultGroupContent);
+                            resultadoDiv.append(resultGroup);
+                        }
+                    }
+                });
             },
             error: function(xhr, status, error) {
                 var resultadoDiv = $('#resultado');
@@ -287,7 +252,11 @@ $(document).ready(function() {
             type: 'POST', // Método HTTP para envio
             data: $(this).serialize(), // Serializa os dados do formulário
             success: function(data) {
-                displayResults([data]); // Passa o resultado para a função de exibição
+                var resultadoDiv = $('#resultado');
+                resultadoDiv.empty();
+
+                // Exibe o resultado no contêiner de resultados
+                resultadoDiv.html(JSON.stringify(data, null, 4));
             },
             error: function(xhr, status, error) {
                 var resultadoDiv = $('#resultado');
