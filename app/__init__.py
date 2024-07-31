@@ -10,10 +10,16 @@ def create_app():
     app.config.from_object('app.config.Config')
 
     from app.cpf_cnpj_app import CPFCNPJApp
+    from app.email_app import EmailApp
 
     @app.route('/', methods=['GET', 'POST'])
     def index():
         app_instance = CPFCNPJApp()
+        return app_instance.index()
+
+    @app.route('/email', methods=['GET', 'POST'])
+    def email():
+        app_instance = EmailApp()
         return app_instance.index()
 
     return app

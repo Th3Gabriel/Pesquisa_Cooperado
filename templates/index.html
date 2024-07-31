@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="../static/Image/icon/icon_aba_sicoob.svg">
-    <link rel="stylesheet" href="static/Styles.css">
+    <link rel="stylesheet" href="../static/Styles.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body>
@@ -24,14 +24,14 @@
         <div class="box-principal">
             <div class="sticky-header">
                 <div class="flex flex-col items-center mb-6" id="cabeca">
-                    <img src="static/Image/Logo.png" alt="Logo" class="h-16 mb-4">
-                    <!-- Formulário de consulta -->
+                    <img src="../static/Image/Logo.png" alt="Logo" class="h-16 mb-4">
+                    <!-- Formulário de consulta Principal-->
                     <form id="consultaForm" method="POST" class="space-y-4 w-full">
-                        {{ form.hidden_tag() }}
+                        {{ cpfcnpj_form.hidden_tag() }}
                         <div>
-                            {{ form.cpfcnpj.label(class="block text-gray-700 font-bold mb-2") }}
-                            {{ form.cpfcnpj(class="w-full p-2 border border-gray-300 rounded", placeholder="Sem Pontos ou caracteres especiais") }}
-                            {% for error in form.cpfcnpj.errors %}
+                            {{ cpfcnpj_form.cpfcnpj.label(class="block text-gray-700 font-bold mb-2") }}
+                            {{ cpfcnpj_form.cpfcnpj(class="w-full p-2 border border-gray-300 rounded", placeholder="Sem Pontos ou caracteres especiais") }}
+                            {% for error in cpfcnpj_form.cpfcnpj.errors %}
                                 <small class="text-red-500">{{ error }}</small>
                             {% endfor %}
                         </div>
@@ -41,17 +41,32 @@
                             <button id="limparResultado" type="button" class="btn bg-custom text-custom p-2 rounded" style="background-color: #003641; width: 150px;">Limpar</button>
                         </div>
                     </form>
+                    <!-- Formulário de consulta EmailAge-->
+                    <form id="consultaEmailForm" method="POST" class="space-y-4 w-full" hidden>
+                        {{ email_form.hidden_tag() }}
+                        <div>
+                            {{ email_form.email.label(class="block text-gray-700 font-bold mb-2") }}
+                            {{ email_form.email(class="w-full p-2 border border-gray-300 rounded", placeholder="Digite o E-mail") }}
+                            {% for error in email_form.email.errors %}
+                                <small class="text-red-500">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                        <!-- Botões de ação -->
+                        <div class="flex space-x-2">
+                            <button id="BuscarResultadoEmail" type="submit" class="btn bg-custom text-custom p-2 rounded" style="background-color: #003641; width: 150px;">Buscar</button>
+                            <button id="limparResultadoEmail" type="button" class="btn bg-custom text-custom p-2 rounded" style="background-color: #003641; width: 150px;">Limpar</button>
+                        </div>
+                    </form>
                 </div>
                 <hr class="w-full border-gray-300 mb-4">
             </div>
             <!-- Container para os resultados -->
             <div class="mt-6">
                 <div class="space-y-4 mt-4" id="resultado">
-                    <div class="relative"></div>
-                    <div class="result-box mt-3">
+                    <div class="relative">
                         <!-- Resultados aqui -->
                         <div class="resultados-conteudo">
-                            <!-- Conteúdo dos resultados -->
+                            <!-- Conteúdo dos resultados será carregado aqui -->
                         </div>
                     </div>
                 </div>
@@ -66,10 +81,10 @@
                     <img src="../static/Image/icon/icon_emailage.svg" alt="">
                 </div>
             </div>
-            <hr class="my-4 hr-custom">
             <div id="relatorios" class="space-y-4">
-                <div id="icon_excel" class="icon-box">
-                    <img src="../static/Image/icon/icon_excel.svg" alt="">
+                <hr class="my-4 hr-custom">
+                <div id="icon_excel" hidden>
+                    <img src="../static/Image/icon/icon_excel.svg" alt="" hidden>
                 </div>
                 <div id="icon_pdf" class="icon-box">
                     <img src="../static/Image/icon/icon_pdf.svg" alt="">
@@ -77,10 +92,7 @@
             </div>
         </div>
         
-        
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="../static/script.js">
-        
-    </script>
+    <script src="../static/script.js"></script>
 </body>
 </html>

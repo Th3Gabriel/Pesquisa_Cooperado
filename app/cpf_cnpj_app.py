@@ -1,14 +1,15 @@
 import logging
 from datetime import datetime, timedelta
 from flask import render_template, jsonify, request, flash
-from app.forms import CPFCNPJForm
+from app.forms import CPFCNPJForm, EmailForm
 from app.database_manager import DatabaseManager
 from app.config import Config
 import requests
 
 class CPFCNPJApp:
     def __init__(self):
-        self.form = CPFCNPJForm()
+        self.form_cpfcnpj = CPFCNPJForm()
+        self.form_email = EmailForm()
         self.db_manager = DatabaseManager()
 
     def consultar_api(self, cpfcnpj):
@@ -67,32 +68,18 @@ class CPFCNPJApp:
         return None
 
     def index(self):
-        if self.form.validate_on_submit():
-            cpfcnpj = self.form.cpfcnpj.data.strip()
-            logging.debug(f"Form submitted with CPF/CNPJ: {cpfcnpj}")
-            record = self.db_manager.get_data(cpfcnpj)
-            if record:
-                if 'data' in record and record['last_updated'] > datetime.now() - timedelta(days=30):
-                    data = record['data']
-                else:
-                    data = self.consultar_api(cpfcnpj)
-                    if data:
-                        self.db_manager.store_data(cpfcnpj, data)
+        if request.method == 'POST' and 'cpfcnpj' in request.form:
+            if self.form_cpfcnpj.validate_on_submit():
+                cpfcnpj = self.form_cpfcnpj.cpfcnpj.data.strip()
+                logging.debug(f"Form submitted with CPF/CNPJ: {cpfcnpj}")
+                data = self.consultar_api(cpfcnpj)
                 if data:
                     return jsonify(data)
                 else:
                     flash('Erro ao consultar CPF/CNPJ. Por favor, tente novamente.', 'danger')
             else:
-                data = self.consultar_api(cpfcnpj)
-                if data:
-                    self.db_manager.store_data(cpfcnpj, data)
-                    return jsonify(data)
-                else:
-                    flash('Erro ao consultar CPF/CNPJ. Por favor, tente novamente.', 'danger')
+                response = jsonify({'errors': self.form_cpfcnpj.errors})
+                response.status_code = 400
+                return response
 
-        if request.method == 'POST' and not self.form.validate_on_submit():
-            response = jsonify({'errors': self.form.errors})
-            response.status_code = 400
-            return response
-
-        return render_template('index.html', form=self.form)
+        return render_template('index.html', cpfcnpj_form=self.form_cpfcnpj, email_form=self.form_email)
