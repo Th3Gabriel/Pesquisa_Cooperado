@@ -164,7 +164,106 @@ $(document).ready(function() {
         "EMPLOYMENT": "Empregado",
         "Institution" : "Instituição",
         "Level" : "Nivel",
-        "EducationalLevel" : "Nivel de Educação"
+        "EducationalLevel" : "Nivel de Educação",
+        "EAAdvice": "Recomendação EA",
+        "Moderate Fraud Risk": "Risco Moderado de Fraude",
+        "EAAdviceID": "ID de Recomendação EA",
+        "EAReason": "Motivo EA",
+        "Limited History for Email": "Histórico Limitado para Email",
+        "EAReasonID": "ID de Motivo EA",
+        "EARiskBand": "Faixa de Risco EA",
+        "Fraud Score 301 to 600": "Pontuação de Fraude de 301 a 600",
+        "EARiskBandID": "ID de Faixa de Risco EA",
+        "EAScore": "Pontuação EA",
+        "EAStatusID": "ID de Status EA",
+        "billAddressToFullNameConfidence": "Confiança de Endereço de Cobrança para Nome Completo",
+        "billAddressToLastNameConfidence": "Confiança de Endereço de Cobrança para Sobrenome",
+        "company": "Empresa",
+        "Sicoob": "Sicoob",
+        "correlationId": "ID de Correlação",
+        "b00e1cdb-6fd0-41e6-94f0-4edf0148abd4": "b00e1cdb-6fd0-41e6-94f0-4edf0148abd4",
+        "country": "País",
+        "BR": "Brasil",
+        "disDescription": "Descrição",
+        "domainAge": "Idade do Domínio",
+        "1999-03-05T00:00:00Z": "1999-03-05T00:00:00Z",
+        "domainExists": "Domínio Existe",
+        "Yes": "Sim",
+        "domain_creation_days": "Dias de Criação do Domínio",
+        "domaincategory": "Categoria do Domínio",
+        "Financial": "Financeiro",
+        "domaincompany": "Empresa do Domínio",
+        "domaincorporate": "Domínio Corporativo",
+        "domaincountryname": "Nome do País do Domínio",
+        "Brazil": "Brasil",
+        "domainname": "Nome do Domínio",
+        "sicoob.com.br": "sicoob.com.br",
+        "domainrelevantinfo": "Informação Relevante do Domínio",
+        "Low Risk Domain Category": "Categoria de Domínio de Baixo Risco",
+        "domainrelevantinfoID": "ID de Informação Relevante do Domínio",
+        "domainriskcountry": "País de Risco do Domínio",
+        "No": "Não",
+        "domainrisklevel": "Nível de Risco do Domínio",
+        "Low": "Baixo",
+        "domainrisklevelID": "ID de Nível de Risco do Domínio",
+        "eName": "Nome Eletrônico",
+        "email": "Email",
+        "gabriel.paz@sicoob.com.br": "gabriel.paz@sicoob.com.br",
+        "emailAge": "Idade do Email",
+        "emailExists": "Email Existe",
+        "Not Sure": "Não Certeza",
+        "emailToBillAddressConfidence": "Confiança de Email para Endereço de Cobrança",
+        "emailToFullNameConfidence": "Nível de Confiança do Nome",
+        "emailToIpConfidence": "Confiança de Email para IP",
+        "emailToLastNameConfidence": "Confiança de Email para Sobrenome",
+        "emailToPhoneConfidence": "Confiança de Email para Telefone",
+        "emailToShipAddressConfidence": "Confiança de Email para Endereço de Entrega",
+        "email_creation_days": "Dias de Criação do Email",
+        "firstVerificationDate": "Data da Primeira Verificação",
+        "2024-07-18T18:47:13Z": "2024-07-18T18:47:13Z",
+        "first_seen_days": "Primeiros Dias Vistos",
+        "fraudRisk": "Risco de Fraude",
+        "500 Moderate": "500 Moderado",
+        "fraud_type": "Tipo de Fraude",
+        "ipToBillAddressConfidence": "Confiança de IP para Endereço de Cobrança",
+        "ipToFullNameConfidence": "Confiança de IP para Nome Completo",
+        "ipToLastNameConfidence": "Confiança de IP para Sobrenome",
+        "ipToPhoneConfidence": "Confiança de IP para Telefone",
+        "ipToShipAddressConfidence": "Confiança de IP para Endereço de Entrega",
+        "lastVerificationDate": "Data da Última Verificação",
+        "2024-07-18T18:47:30Z": "2024-07-18T18:47:30Z",
+        "lastflaggedon": "Último Marcado em",
+        "location": "Localização",
+        "overallDigitalIdentityScore": "Pontuação Geral de Identidade Digital",
+        "phoneToBillAddressConfidence": "Confiança de Telefone para Endereço de Cobrança",
+        "phoneToFullNameConfidence": "Confiança de Telefone para Nome Completo",
+        "phoneToLastNameConfidence": "Confiança de Telefone para Sobrenome",
+        "phoneToShipAddressConfidence": "Confiança de Telefone para Endereço de Entrega",
+        "phone_status": "Status do Telefone",
+        "shipAddressToBillAddressConfidence": "Confiança de Endereço de Entrega para Endereço de Cobrança",
+        "shipAddressToFullNameConfidence": "Confiança de Endereço de Entrega para Nome Completo",
+        "shipAddressToLastNameConfidence": "Confiança de Endereço de Entrega para Sobrenome",
+        "shipforward": "Envio Adiante",
+        "No": "Não",
+        "smfriends": "Amigos de Mídia Social",
+        "smlinks": "Links de Mídia Social",
+        "source_industry": "Indústria Fonte",
+        "status": "Status",
+        "ValidDomain": "Domínio Válido",
+        "title": "Título",
+        "totalhits": "Total de Acessos",
+        "transAmount": "Quantidade da Transação",
+        "transCurrency": "Moeda da Transação",
+        "uniquehits": "Acessos Únicos",
+        "userdefinedrecordid": "ID de Registro Definido pelo Usuário",
+        "VERY HIGH": "Muito Alto",
+        "M": "Masculino",
+        "F": "Feminino",
+        "GRADUATED": "Graduado",
+        "EMPLOYMENT": "Empregado",
+        "Institution": "Instituição",
+        "Level": "Nível",
+        "EducationalLevel": "Nível de Educação"
         // Adicione todas as traduções relevantes aqui
     };
 
@@ -242,39 +341,60 @@ $(document).ready(function() {
             }
         });
     });
+// Manipulador de envio do formulário de consulta EmailAge
+$('#consultaEmailForm').on('submit', function(event) {
+    event.preventDefault();
 
-    // Manipulador de envio do formulário de consulta EmailAge
-    $('#consultaEmailForm').on('submit', function(event) {
-        event.preventDefault();
+    $.ajax({
+        url: '/email', // URL para enviar o formulário
+        type: 'POST', // Método HTTP para envio
+        data: $(this).serialize(), // Serializa os dados do formulário
+        success: function(data) {
+            var resultadoDiv = $('#resultado');
+            resultadoDiv.empty();
 
-        $.ajax({
-            url: '/email', // URL para enviar o formulário
-            type: 'POST', // Método HTTP para envio
-            data: $(this).serialize(), // Serializa os dados do formulário
-            success: function(data) {
-                var resultadoDiv = $('#resultado');
-                resultadoDiv.empty();
+            var emailData = data.query.results[0];
+            var filteredKeys = [
+                "emailExists",
+                "domainExists",
+                "first_seen_days",
+                "EARiskBandID",
+                "emailToFullNameConfidence"
+            ];
 
-                // Exibe o resultado no contêiner de resultados
-                resultadoDiv.html(JSON.stringify(data, null, 4));
-            },
-            error: function(xhr, status, error) {
-                var resultadoDiv = $('#resultado');
-                resultadoDiv.empty();
-                if (xhr.responseJSON && xhr.responseJSON.errors) {
-                    // Exibe mensagens de erro específicas do formulário
-                    for (const [key, messages] of Object.entries(xhr.responseJSON.errors)) {
-                        messages.forEach(message => {
-                            resultadoDiv.append('<p class="text-red-500">' + message + '</p>');
-                        });
-                    }
-                } else {
-                    // Exibe mensagem de erro genérica
-                    resultadoDiv.append('<p class="text-red-500">Erro ao consultar o e-mail. Por favor, tente novamente.</p>');
+            filteredKeys.forEach(function(key) {
+                if (emailData.hasOwnProperty(key)) {
+                    var value = emailData[key];
+                    var resultItem = createResultItem(key, value);
+
+                    var translatedLabel = translations[key] || key;
+                    var resultGroup = $('<div class="result-group bordered-box">');
+                    var resultGroupHeader = $('<div class="result-group-header"><strong>' + translatedLabel + '</strong></div>');
+                    var resultGroupContent = $('<div class="result-group-content">' + resultItem + '</div>');
+
+                    resultGroup.append(resultGroupHeader);
+                    resultGroup.append(resultGroupContent);
+                    resultadoDiv.append(resultGroup);
                 }
+            });
+        },
+        error: function(xhr, status, error) {
+            var resultadoDiv = $('#resultado');
+            resultadoDiv.empty();
+            if (xhr.responseJSON && xhr.responseJSON.errors) {
+                // Exibe mensagens de erro específicas do formulário
+                for (const [key, messages] of Object.entries(xhr.responseJSON.errors)) {
+                    messages.forEach(message => {
+                        resultadoDiv.append('<p class="text-red-500">' + message + '</p>');
+                    });
+                }
+            } else {
+                // Exibe mensagem de erro genérica
+                resultadoDiv.append('<p class="text-red-500">Erro ao consultar o e-mail. Por favor, tente novamente.</p>');
             }
-        });
+        }
     });
+});
 
     // Botão para limpar os resultados e resetar o formulário
     $('#limparResultado').on('click', function(event) {
