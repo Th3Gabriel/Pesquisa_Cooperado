@@ -33,18 +33,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Pega o conteúdo do elemento com id resultado
         const resultadoElement = document.getElementById('resultado');
-        const resultadoHtml = resultadoElement.innerHTML;
-
-        // Converte o HTML para texto simples para evitar problemas de renderização
         const resultadoText = resultadoElement.innerText;
 
-        // Adiciona o conteúdo ao PDF
-        doc.text(resultadoText, 10, 10);
+        // Configuração do PDF
+        doc.setFontSize(10);
+        doc.setTextColor(40);
+        doc.setFont("helvetica", "bold");
+        doc.text("Resultado da Consulta", 10, 20,);
+
+        doc.setFontSize(10);
+        doc.text("Consulta realizada em: " + new Date().toLocaleString(), 10, 25);
+
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(0);
+        doc.text(resultadoText, 10, 30);
 
         // Salva o documento como resultado.pdf
         doc.save('resultado.pdf');
     });
 });
+
 
 window.onload = function() {
     // Esconde a tela de carregamento quando a página é completamente carregada

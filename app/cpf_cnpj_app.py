@@ -1,5 +1,4 @@
 import logging
-from datetime import datetime, timedelta
 from flask import render_template, jsonify, request, flash
 from app.forms import CPFCNPJForm, EmailForm
 from app.database_manager import DatabaseManager
@@ -74,6 +73,7 @@ class CPFCNPJApp:
                 logging.debug(f"Form submitted with CPF/CNPJ: {cpfcnpj}")
                 data = self.consultar_api(cpfcnpj)
                 if data:
+                    self.db_manager.store_data(cpfcnpj, data)
                     return jsonify(data)
                 else:
                     flash('Erro ao consultar CPF/CNPJ. Por favor, tente novamente.', 'danger')

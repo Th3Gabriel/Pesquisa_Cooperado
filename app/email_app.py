@@ -1,20 +1,23 @@
-import json
 import logging
 from flask import render_template, jsonify, request, flash
 from emailage.client import EmailageClient
 from app.forms import EmailForm
+from app.database_manager import DatabaseManager
 from app.config import Config
 
 class EmailApp:
     def __init__(self):
         self.form_email = EmailForm()
         self.client = EmailageClient(Config.EMAILAGE_ACCOUNT_SID, Config.EMAILAGE_AUTH_TOKEN)
+        self.db_manager = DatabaseManager()
 
     def consultar_email(self, email):
         logging.debug(f"Consultando Emailage API para o e-mail: {email}")
         try:
             response = self.client.query(email)
             if response:
+                # Armazenar os dados no banco
+                self.db_manager.store_email_data(email, response)
                 return response
             else:
                 logging.error(f"Não foi encontrado resultado para o e-mail {email}.")
