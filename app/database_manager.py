@@ -19,7 +19,7 @@ class DatabaseManager:
             logging.info("Database connection established and tables created.")
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                logging.error("Something is wrong with your user name or password")
+                logging.error("Something is wrong with your username or password")
             elif err.errno == errorcode.ER_BAD_DB_ERROR:
                 logging.error("Database does not exist")
             else:
@@ -28,6 +28,7 @@ class DatabaseManager:
     def create_tables(self):
         cursor = self.conn.cursor()
         try:
+            # Tabela para CPF
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS cpf_BigDataCorp (
                     cpf VARCHAR(11) PRIMARY KEY,
@@ -50,6 +51,8 @@ class DatabaseManager:
                     last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             ''')
+
+            # Tabela para CNPJ
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS cnpj_BigDataCorp (
                     cnpj VARCHAR(14) PRIMARY KEY,
@@ -68,13 +71,15 @@ class DatabaseManager:
                 )
             ''')
 
-            # Adiciona criação da tabela email_info
+            # Tabela para EmailAge
             cursor.execute('''
-                CREATE TABLE IF NOT EXISTS email_info (
+                CREATE TABLE IF NOT EXISTS emailage_infos (
                     email VARCHAR(255) PRIMARY KEY,
-                    risk_score DECIMAL(5,2),
-                    fraud_reported BOOLEAN,
-                    risk_level VARCHAR(50),
+                    emailExists BOOLEAN,
+                    domainExists BOOLEAN,
+                    first_seen_days INT,
+                    EARiskBandID VARCHAR(50),
+                    emailToFullNameConfidence VARCHAR(50),
                     last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             ''')
@@ -236,22 +241,52 @@ class DatabaseManager:
             cursor.close()
 
     def store_email_data(self, email, data):
+        # Debug: Exibir os dados recebidos da API para verificar seu conteúdo
+        logging.debug(f"Data received for email {email}: {data}")
+
+        # Acessando a estrutura correta dentro do retorno da API
+        results = data.get('query', {}).get('results', [])
+        if not results:
+            logging.error(f"No results found for email {email}")
+            return
+
+        # Considerando que apenas um resultado será retornado
+        result = results[0]
+
+        # Verificando se os campos estão presentes
+        email_exists = result.get('emailExists')
+        domain_exists = result.get('domainExists')
+        first_seen_days = result.get('first_seen_days')
+        ea_risk_band_id = result.get('EARiskBandID')
+        email_to_full_name_confidence = result.get('emailToFullNameConfidence')
+
+        logging.debug(f"Parsed values - emailExists: {email_exists}, domainExists: {domain_exists}, "
+                      f"first_seen_days: {first_seen_days}, EARiskBandID: {ea_risk_band_id}, "
+                      f"emailToFullNameConfidence: {email_to_full_name_confidence}")
+
         query = '''
-            INSERT INTO email_info (email, risk_score, fraud_reported, risk_level, last_updated)
-            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP)
+            INSERT INTO emailage_infos (email, emailExists, domainExists, first_seen_days, EARiskBandID, emailToFullNameConfidence, last_updated)
+            VALUES (%s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
             ON DUPLICATE KEY UPDATE
-            risk_score = VALUES(risk_score),
-            fraud_reported = VALUES(fraud_reported),
-            risk_level = VALUES(risk_level),
+            emailExists = VALUES(emailExists),
+            domainExists = VALUES(domainExists),
+            first_seen_days = VALUES(first_seen_days),
+            EARiskBandID = VALUES(EARiskBandID),
+            emailToFullNameConfidence = VALUES(emailToFullNameConfidence),
             last_updated = VALUES(last_updated)
         '''
 
+        # Extraindo valores dos dados recebidos da API
         values = (
             email,
-            data.get('riskScore'),
-            data.get('fraudReported'),
-            data.get('riskLevel')
+            email_exists == 'Yes',
+            domain_exists == 'Yes',
+            int(first_seen_days) if first_seen_days else None,
+            ea_risk_band_id,
+            email_to_full_name_confidence
         )
+
+        logging.debug(f"Values to insert: {values}")
 
         try:
             cursor = self.conn.cursor()
